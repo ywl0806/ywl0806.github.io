@@ -31,15 +31,60 @@ const skills = {
 
 
 const career = [
-  { year: '2022.08 – 2022.11', name: '車リース実績集計システム', desc: 'Firebase サーバーレス構成の提案・採用で月額10円以下の運用を実現' },
-  { year: '2022.11 – 2023.04', name: '車リースWEBシステム', desc: '既存コードのロジック改善により検索速度を約50%向上' },
-  { year: '2023.04 – 2023.07', name: 'Headless CMS POC', desc: 'GitHub Actions CI/CDパイプライン構築・アーキテクチャ設計から実装まで担当' },
-  { year: '2023.07 – 2023.09', name: '類似品検索システム', desc: 'テーブル定義から動的にUIを生成する仕組みで200以上のテーブルに対応' },
-  { year: '2023.09 – 2024.04', name: 'RAG開発', desc: 'フロントエンド・バックエンド両方のコードレビューと実装を担当' },
-  { year: '2024.05', name: 'GPT検索アプリ POC', desc: '大手教育系企業のプロジェクトでユニットテスト・E2Eテストを実装' },
-  { year: '2024.06 – 2025.03', name: 'クリニック検索・予約アプリ', desc: 'インフラ設計・CloudFrontキャッシュ戦略の最適化によるUX向上' },
-  { year: '2025.04 – 2025.07', name: 'カーシェアシステム', desc: 'Stripe を用いた決済処理の設計・実装' },
-  { year: '2025.08 – 2026.02', name: '基幹システム開発', desc: '詳細設計・実装・テスト設計/実施を担当' },
+  {
+    year: '2022.08 – 2022.11',
+    name: '車リース実績集計システム',
+    desc: 'Firebase サーバーレス構成の提案・採用で月額10円以下の運用を実現',
+    tech: ['TypeScript', 'React', 'Express', 'Firebase', 'Firestore', 'Cloud Functions'],
+  },
+  {
+    year: '2022.11 – 2023.04',
+    name: '車リースWEBシステム',
+    desc: '既存コードのロジック改善により検索速度を約50%向上',
+    tech: ['TypeScript', 'NestJS', 'Next.js', 'PostgreSQL', 'Prisma', 'AWS', 'Docker'],
+  },
+  {
+    year: '2023.04 – 2023.07',
+    name: 'Headless CMS POC',
+    desc: 'GitHub Actions CI/CDパイプライン構築・アーキテクチャ設計から実装まで担当',
+    tech: ['TypeScript', 'NestJS', 'React', 'Express', 'GraphQL', 'Firestore', 'Cloud Run', 'Docker'],
+  },
+  {
+    year: '2023.07 – 2023.09',
+    name: '類似品検索システム',
+    desc: 'テーブル定義から動的にUIを生成する仕組みで200以上のテーブルに対応',
+    tech: ['TypeScript', 'React', 'PostgreSQL', 'Supabase'],
+  },
+  {
+    year: '2023.09 – 2024.04',
+    name: 'RAG開発',
+    desc: 'フロントエンド・バックエンド両方のコードレビューと実装を担当',
+    tech: ['TypeScript', 'Python', 'React', 'FastAPI', 'MySQL', 'Qdrant', 'Azure'],
+  },
+  {
+    year: '2024.05',
+    name: 'GPT検索アプリ POC',
+    desc: '大手教育系企業のプロジェクトでユニットテスト・E2Eテストを実装',
+    tech: ['Python', 'FastAPI', 'Playwright'],
+  },
+  {
+    year: '2024.06 – 2025.03',
+    name: 'クリニック検索・予約アプリ',
+    desc: 'インフラ設計・アーキテクチャ設計からフロント・バックエンド実装まで担当',
+    tech: ['TypeScript', 'Python', 'Next.js', 'FastAPI', 'AWS ECS', 'Lambda', 'Cognito', 'Terraform'],
+  },
+  {
+    year: '2025.04 – 2025.07',
+    name: 'カーシェアシステム',
+    desc: 'Stripe を用いた決済処理の設計・実装',
+    tech: ['PHP', 'TypeScript', 'Dart', 'Laravel', 'Next.js', 'Flutter', 'Stripe', 'Azure'],
+  },
+  {
+    year: '2025.08 – 2026.02',
+    name: '基幹システム開発',
+    desc: '詳細設計・実装・テスト設計/実施を担当',
+    tech: ['Java', 'TypeScript', 'Spring', 'Next.js', 'Azure'],
+  },
 ]
 
 const certs = [
@@ -118,7 +163,7 @@ export default function App() {
           <p className="text-stone-600 text-lg leading-[1.9]">
             バックエンド・インフラ領域を中心に、
             フロントエンドまで含めたプロダクト開発に従事。
-            Go / Python / AWS を軸に、
+            Typescript / Python / Go / AWS を軸に、
             設計・実装・運用まで一貫して対応しています。
             個人開発では顔認識フォトプラットフォームを開発し、
             非同期処理・ベクトル検索・AWS を用いたインフラ構築など、
@@ -170,6 +215,8 @@ export default function App() {
               <YunoScreenshots />
               {/* Diagram Tabs */}
               <YunoDiagramTabs />
+              {/* Design Decisions */}
+              <YunoDesignDecisions />
               <div className="flex flex-wrap gap-2">
                 {['Go', 'React', 'Python', 'Echo', 'PostgreSQL', 'pgvector', 'AWS', 'Terraform'].map(t => (
                   <span key={t} className="text-xs text-stone-500 bg-stone-50 border border-stone-100 rounded-full px-3 py-1">{t}</span>
@@ -213,13 +260,20 @@ export default function App() {
           <div>
             {career.map((item, i) => (
               <FadeIn key={item.name} delay={Math.min(Math.floor(i / 3) + 1, 5) as 1 | 2 | 3 | 4 | 5}>
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 py-3 border-b border-stone-50 last:border-0 group cursor-default">
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 py-4 border-b border-stone-50 last:border-0 group cursor-default">
                   <span className="text-xs text-stone-300 font-mono sm:w-36 sm:shrink-0 sm:pt-0.5 group-hover:text-stone-400 transition-colors">
                     {item.year}
                   </span>
-                  <div>
+                  <div className="flex-1">
                     <p className="text-sm font-medium text-stone-700 group-hover:text-stone-900 transition-colors">{item.name}</p>
                     <p className="text-xs text-stone-400 mt-1.5 leading-relaxed">{item.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+                      {item.tech.map(t => (
+                        <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-stone-100 text-stone-500 group-hover:bg-stone-200 group-hover:text-stone-600 transition-colors">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </FadeIn>
@@ -308,7 +362,7 @@ graph TB
 
 const UPLOAD_CHART = `
 sequenceDiagram
-    participant C as 클라이언트
+    participant C as クライアント
     participant API as API Server
     participant S3 as S3
     participant SQS_R as SQS (resize)
@@ -320,34 +374,34 @@ sequenceDiagram
 
     C->>API: POST /presigned-url
     API->>DB: INSERT media_items(status=01) + media_files
-    API->>S3: Presigned PUT URL 생성
+    API->>S3: Presigned PUT URL 生成
     API-->>C: {media_item_id, presigned_url}
 
-    C->>S3: PUT (직접 업로드)
+    C->>S3: PUT (直接アップロード)
     S3-->>C: 200 OK
-    S3->>SQS_R: PutObject 이벤트 알림 (prefix=original/)
+    S3->>SQS_R: PutObject イベント 通知 (prefix=original/)
 
     SQS_R-->>RW: ReceiveMessage (Long Polling)
     RW->>DB: status=02
-    RW->>S3: 원본 다운로드
-    RW->>RW: EXIF 파싱
-    RW->>S3: view / thumbnail 업로드
-    RW->>DB: media_files INSERT, status=03 (조회 가능)
+    RW->>S3: オリジナル ダウンロード
+    RW->>RW: EXIF 解析
+    RW->>S3: view / thumbnail アップロード
+    RW->>DB: media_files INSERT, status=03 (表示可能)
     RW->>SQS_R: DeleteMessage
     RW->>SQS: SendMessage {media_item_id, family_id, view_storage_key}
 
     SQS-->>AI: ReceiveMessage
-    AI->>S3: view 이미지 다운로드
-    AI->>AI: InsightFace 추론 → faces [{bbox, embedding}]
+    AI->>S3: view 画像 ダウンロード
+    AI->>AI: InsightFace 推論 → faces [{bbox, embedding}]
     AI->>FRW: subprocess stdin JSON
 
-    FRW->>DB: advisory lock 획득
-    FRW->>DB: pgvector 코사인 유사도 검색
+    FRW->>DB: advisory lock 取得
+    FRW->>DB: pgvector コサイン類似度 検索
     FRW->>DB: identity upsert + face_detections INSERT
-    FRW->>S3: 얼굴 크롭 업로드 (512×512 WebP)
+    FRW->>S3: 顔写真クロップ，アップロード (512×512 WebP)
     FRW->>DB: identity_face_imgs INSERT
 
-    C->>API: GET /upload-batch/status (폴링)
+    C->>API: GET /upload-batch/status (Polling)
     API-->>C: {is_completed: true}
     `
 
@@ -443,6 +497,206 @@ function YunoScreenshots() {
   )
 }
 
+type DesignDecisionItem = {
+  category: string
+  title: string
+  reason: string
+}
+
+type DesignDecisionGroup = {
+  group: string
+  items: DesignDecisionItem[]
+}
+
+const categoryColor: Record<string, string> = {
+  ECS: 'bg-blue-50 text-blue-600',
+  CloudWatch: 'bg-amber-50 text-amber-600',
+  Lambda: 'bg-emerald-50 text-emerald-600',
+  SQS: 'bg-orange-50 text-orange-600',
+  'S3 + CDN': 'bg-sky-50 text-sky-600',
+  pgvector: 'bg-violet-50 text-violet-600',
+  Terraform: 'bg-rose-50 text-rose-600',
+  DLQ: 'bg-red-50 text-red-600',
+  設計: 'bg-teal-50 text-teal-600',
+  API: 'bg-indigo-50 text-indigo-600',
+  CDN: 'bg-sky-50 text-sky-600',
+  DB: 'bg-violet-50 text-violet-600',
+  S3: 'bg-sky-50 text-sky-600',
+  SSM: 'bg-stone-100 text-stone-600',
+  IAM: 'bg-pink-50 text-pink-600',
+}
+
+const designDecisionGroups: DesignDecisionGroup[] = [
+  {
+    group: 'インフラ設計',
+    items: [
+      {
+        category: 'ECS',
+        title: 'ECS Fargate — 動画処理・顔認識 Worker',
+        reason: '動画リサイズ・顔認識はレイテンシが大きく、アップロード API のレスポンスに含めることができない。SQS を挟んで非同期化することで、アップロード API の応答速度を維持しつつ、Worker の失敗時に Visibility Timeout で自動リトライ、一定回数失敗したジョブを DLQ に隔離しデータ損失を防止している。',
+      },
+      {
+        category: 'CloudWatch',
+        title: 'CloudWatch Events — Fargate Worker のオンデマンド起動',
+        reason: '動画処理および顔認識は利用頻度が低く、Worker を常時起動するとアイドル状態でもコストが発生し続ける。SQS のメッセージ数を CloudWatch で監視し、ジョブ投入時のみ ECS Fargate タスクを起動する構成を採用。ECS Auto Scaling のスケジュールベース・メトリクスベースも検討したが、最小タスク数を 0 に保ちながらジョブ検知時のみ起動するには CloudWatch Events から直接 RunTask を呼び出す構成が最もシンプルだった。通常時タスク数 0 → ジョブ投入時のみ自動スケールアウト → 処理完了後スケールイン。',
+      },
+      {
+        category: 'Lambda',
+        title: 'Lambda — API サーバー',
+        reason: '個人利用規模ではリクエスト数が少なく、常時稼働サーバーを維持するメリットが小さい。Lambda はリクエスト数に応じた従量課金のためアイドルコストが発生せず、現状の利用規模では無料枠内に収まっている。将来的にアクセス数が増加した場合は ECS Fargate + ALB 構成へ移行できるよう、アプリケーションは Lambda 固有の実装に依存しない構造としている。',
+      },
+      {
+        category: 'Lambda',
+        title: 'Lambda — 画像リサイズ',
+        reason: 'S3 へのアップロード完了をトリガーに起動するイベント駆動の処理。アイドル時のコストが発生せず、バースト的なアップロードにも自動でスケールするため Lambda が最適だった。',
+      },
+      {
+        category: 'SQS',
+        title: 'SQS — 非同期ジョブキュー',
+        reason: '顔認識・動画処理はレイテンシが大きく、アップロード API のレスポンスに含めることができない。SQS を挟んで非同期化することでアップロード API の応答速度を維持し、Worker の失敗時に自動リトライ（Visibility Timeout）、一定回数失敗したジョブを DLQ に隔離しデータ損失を防止している。',
+      },
+      {
+        category: 'S3 + CDN',
+        title: 'S3 + CloudFront — メディアストレージ + CDN',
+        reason: 'Presigned URL を発行することで、メディアファイルの送受信が API サーバーを経由しない。API サーバーの負荷とコストを削減しつつ、CloudFront によりレイテンシを改善している。',
+      },
+      {
+        category: 'pgvector',
+        title: 'pgvector — ベクトル検索',
+        reason: '顔認識では 512 次元の埋め込みベクトル検索が必要になる。専用ベクトルデータベース（Pinecone、Weaviate など）も検討したが、本サービスは家族向けの小規模利用を前提としており、数千万件規模のベクトル検索は想定していない。運用コストとシステム構成の複雑性を抑えるため、既存の PostgreSQL 上で完結できる pgvector を採用した。',
+      },
+      {
+        category: 'Terraform',
+        title: 'Terraform — IaC',
+        reason: 'モジュール分割によりサービス単体の変更が他に影響しない構造を実現。S3 バックエンドで tfstate をリモート管理（チーム開発・CI/CD 対応）し、SSM Parameter Store で機密情報を管理することでリポジトリに環境変数ファイルを含めない構成としている。',
+      },
+    ],
+  },
+  {
+    group: '障害耐性',
+    items: [
+      {
+        category: 'DLQ',
+        title: 'SQS + DLQ によるジョブ保護',
+        reason: '顔認識および動画処理は SQS を介して実行する。Worker 障害時は Visibility Timeout により自動リトライし、一定回数失敗したジョブは DLQ に隔離する。DLQ に隔離されたジョブは手動で再実行が可能。',
+      },
+      {
+        category: '設計',
+        title: '再処理可能な設計',
+        reason: 'メディアのソースデータは常に S3 の original/ に保存される。派生データ（view / thumbnail / face embedding）はいつでも再生成できるため、処理失敗時も再実行のみで復旧可能。status=04（failed）として記録されたメディアは、ステータスリセット後に再処理できる。',
+      },
+      {
+        category: 'API',
+        title: 'ステートレス API',
+        reason: 'API サーバーはステートレス構成のため、インスタンス障害時も他のインスタンスへ即時フェイルオーバーできる。',
+      },
+    ],
+  },
+  {
+    group: 'コスト最適化',
+    items: [
+      {
+        category: 'Lambda',
+        title: 'Lambda によるアイドルコスト 0',
+        reason: 'API サーバーを Lambda で運用することで、リクエストが発生しない時間帯のコンピューティングコストをゼロに抑えている。現状の個人利用規模では無料枠内に収まっている。',
+      },
+      {
+        category: 'ECS',
+        title: 'Worker のオンデマンド起動',
+        reason: '顔認識・動画処理 Worker は通常時タスク数 0 を維持し、SQS 監視でジョブ投入時のみ起動する。アップロードが発生しない日はコンピューティングコストがほぼゼロになる。',
+      },
+      {
+        category: 'CDN',
+        title: 'CloudFront キャッシュによるオリジン転送量削減',
+        reason: 'メディアファイルを CloudFront でキャッシュすることで、S3 へのオリジンアクセスを削減し転送コストを抑えている。',
+      },
+      {
+        category: 'pgvector',
+        title: 'pgvector により専用ベクトル DB 不要',
+        reason: '既存の PostgreSQL 上で pgvector を使うことで、専用ベクトルデータベースの運用コストと複雑性を排除している。',
+      },
+    ],
+  },
+  {
+    group: 'セキュリティ',
+    items: [
+      {
+        category: 'DB',
+        title: 'マルチテナント分離',
+        reason: 'すべての主要テーブルに family_id を持たせ、クエリレベルでデータを分離している。他の家族のメディアへアクセスできないよう、全取得系 API で family_id を条件に含めている。',
+      },
+      {
+        category: 'S3',
+        title: 'メディアアクセス制御',
+        reason: 'original/ バケットは公開アクセスを完全に禁止している。閲覧用メディア（view / thumbnail / video）は CloudFront OAC を経由した場合のみアクセス可能とし、S3 URL の直接公開を防いでいる。',
+      },
+      {
+        category: 'IAM',
+        title: 'IAM 最小権限',
+        reason: 'Lambda・ECS タスクには必要最小限の IAM 権限のみを付与している。例えば顔認識 Worker は対象 S3 パスと SQS のみへのアクセス権を持ち、不要な AWS リソースへのアクセスを持たない。',
+      },
+    ],
+  },
+]
+
+function DesignDecisionAccordionItem({ item }: { item: DesignDecisionItem }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="bg-white">
+      <button
+        className="w-full flex items-center justify-between gap-3 px-5 py-3.5 text-left hover:bg-stone-50 transition-colors"
+        onClick={() => setOpen(!open)}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full shrink-0 ${categoryColor[item.category] ?? 'bg-stone-100 text-stone-500'}`}>
+            {item.category}
+          </span>
+          <span className="text-sm font-medium text-stone-700 truncate">{item.title}</span>
+        </div>
+        <ChevronIcon open={open} />
+      </button>
+      {open && (
+        <div className="px-5 pb-4">
+          <p className="text-sm text-stone-500 leading-relaxed">{item.reason}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function YunoDesignDecisions() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs font-mono text-stone-400 tracking-widest uppercase mb-3">設計の意思決定</p>
+      <div className="space-y-3">
+        {designDecisionGroups.map((group) => (
+          <div key={group.group} className="border border-stone-100 rounded-xl overflow-hidden">
+            <div className="px-5 py-2.5 bg-stone-50 border-b border-stone-100">
+              <span className="text-xs font-mono text-stone-400 tracking-widest uppercase">{group.group}</span>
+            </div>
+            <div className="divide-y divide-stone-100">
+              {group.items.map((item, i) => (
+                <DesignDecisionAccordionItem key={i} item={item} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+      className={`shrink - 0 text - stone - 300 transition - transform duration - 200 ${open ? 'rotate-180' : ''}`}
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  )
+}
+
 function YunoDiagramTabs() {
   const tabs = [
     { id: 'arch', label: '全体構成', chart: ARCH_CHART },
@@ -460,7 +714,7 @@ function YunoDiagramTabs() {
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`px-4 py-2.5 text-xs font-mono tracking-wide transition-colors ${active === tab.id
+            className={`px - 4 py - 2.5 text - xs font - mono tracking - wide transition - colors ${active === tab.id
               ? 'text-stone-700 border-b-2 border-stone-400 bg-white'
               : 'text-stone-400 hover:text-stone-600'
               }`}
