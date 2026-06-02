@@ -522,6 +522,7 @@ const categoryColor: Record<string, string> = {
   CDN: 'bg-sky-50 text-sky-600',
   DB: 'bg-violet-50 text-violet-600',
   S3: 'bg-sky-50 text-sky-600',
+  CloudFront: 'bg-sky-50 text-sky-600',
   SSM: 'bg-stone-100 text-stone-600',
   IAM: 'bg-pink-50 text-pink-600',
 }
@@ -559,11 +560,6 @@ const designDecisionGroups: DesignDecisionGroup[] = [
         category: 'S3 + CDN',
         title: 'S3 + CloudFront — メディアストレージ + CDN',
         reason: 'Presigned URL を発行することで、メディアファイルの送受信が API サーバーを経由しない。API サーバーの負荷とコストを削減しつつ、CloudFront によりレイテンシを改善している。',
-      },
-      {
-        category: 'pgvector',
-        title: 'pgvector — ベクトル検索',
-        reason: '顔認識では 512 次元の埋め込みベクトル検索が必要になる。専用ベクトルデータベース（Pinecone、Weaviate など）も検討したが、本サービスは家族向けの小規模利用を前提としており、数千万件規模のベクトル検索は想定していない。運用コストとシステム構成の複雑性を抑えるため、既存の PostgreSQL 上で完結できる pgvector を採用した。',
       },
       {
         category: 'Terraform',
@@ -629,6 +625,11 @@ const designDecisionGroups: DesignDecisionGroup[] = [
         category: 'S3',
         title: 'メディアアクセス制御',
         reason: 'original/ バケットは公開アクセスを完全に禁止している。閲覧用メディア（view / thumbnail / video）は CloudFront OAC を経由した場合のみアクセス可能とし、S3 URL の直接公開を防いでいる。',
+      },
+      {
+        category: "CloudFront",
+        title: 'CloudFront Signed Cookie によるメディアアクセス制御',
+        reason: 'ログイン時に テナント（family） スコープの Signed Cookieを発行する。CloudFront はリクエストごとに署名を検証するため、URL を直接知っていても他の家族のメディアにはアクセスできない。',
       },
       {
         category: 'IAM',
