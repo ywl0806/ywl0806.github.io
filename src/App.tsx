@@ -24,7 +24,7 @@ const skills = {
   Languages: ['TypeScript', 'Go', 'Python'],
   Frontend: ['React', 'Next.js'],
   Backend: ['NestJS', 'Echo', 'FastAPI'],
-  Database: ['PostgreSQL', 'Firestore'],
+  Database: ['PostgreSQL'],
   Infrastructure: ['AWS', 'Terraform'],
   Other: ['Stripe'],
 }
