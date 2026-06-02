@@ -691,7 +691,7 @@ function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
       width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-      className={`shrink - 0 text - stone - 300 transition - transform duration - 200 ${open ? 'rotate-180' : ''}`}
+      className={`shrink-0 text-stone-300 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
     >
       <path d="m6 9 6 6 6-6" />
     </svg>
@@ -715,7 +715,7 @@ function YunoDiagramTabs() {
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`px - 4 py - 2.5 text - xs font - mono tracking - wide transition - colors ${active === tab.id
+            className={`px-4 py-2.5 text-xs font-mono tracking-wide transition-colors ${active === tab.id
               ? 'text-stone-700 border-b-2 border-stone-400 bg-white'
               : 'text-stone-400 hover:text-stone-600'
               }`}
