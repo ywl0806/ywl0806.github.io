@@ -79,7 +79,7 @@ export default function MermaidDiagram({ chart }: { chart: string }) {
           onClick={() => setExpanded(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl max-w-5xl max-h-[90vh] overflow-auto p-8 relative"
+            className="bg-white rounded-2xl shadow-2xl w-full h-[95vh] overflow-auto p-8 relative"
             onClick={e => e.stopPropagation()}
           >
             <button
