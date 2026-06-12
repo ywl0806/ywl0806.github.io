@@ -127,7 +127,7 @@ export default function App() {
       {/* Hero — full viewport height, vertically centered */}
       <div style={{ minHeight: 'calc(100vh - 64px)', marginTop: '64px' }} className="flex items-center">
         <div className="max-w-6xl w-full mx-auto px-6 sm:px-12 py-12 sm:py-16">
-          <p className="text-xs font-mono tracking-widest text-stone-400 uppercase mb-8">Full Stack Engineer</p>
+          <p className="text-xs font-mono tracking-widest text-stone-400 uppercase mb-8">Backend / Infrastructure Engineer</p>
           <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-stone-900 leading-[1.1] mb-4">
             イ・ヨンウ
           </h1>
@@ -346,18 +346,17 @@ graph TB
     Client --> CF["CloudFront (CDN)"]
     Client --> APIGW["API Gateway"]
 
-    APIGW --> Lambda-API["Lambda\nAPI Server (Go/Echo)"]
+    APIGW --> LambdaAPI["Lambda\nAPI Server (Go/Echo)"]
     CF --> S3Front["S3\n静的配信 (Frontend)"]
 
-    Lambda-API --> PostgreSQL["PostgreSQL 17 + pgvector"]
-    Lambda-API --> SQS
-    Lambda-R -->
-    SQS --> PyWorker["ECS Worker (Python)\n顔認識バッチ"]
-    SQS --> GoWorker["ECS Worker (Go)\n動画処理バッチ"]
+    LambdaAPI --> PG["PostgreSQL 17 + pgvector"]
 
     Client -- "Presigned URL" --> S3Media["S3\nメディアストレージ"]
-    S3Media -- "S3イベント" --> SQS
-    SQS --> Lambda-R["Lambda\n画像リサイズ"]
+    S3Media -- "S3イベント" --> SQSR["SQS (resize)"]
+    SQSR --> LambdaR["Lambda\n画像リサイズ"]
+    LambdaR --> SQSW["SQS (face / video)"]
+    SQSW --> PyWorker["ECS Worker (Python)\n顔認識バッチ"]
+    SQSW --> GoWorker["ECS Worker (Go)\n動画処理バッチ"]
 `
 
 const UPLOAD_CHART = `
@@ -453,7 +452,8 @@ graph TB
     L_API --> SUPA
     L_API --> S3_MEDIA
 
-    S3_MEDIA -->|Webhook| L_R
+    S3_MEDIA -->|S3 Event Notification| SQS_R
+    SQS_R --> L_R
     L_R --> S3_MEDIA
     L_R --> SUPA
     L_R --> SQS_F
